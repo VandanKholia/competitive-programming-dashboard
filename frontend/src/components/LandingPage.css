@@ -1,0 +1,9 @@
+.hero-bg {
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
