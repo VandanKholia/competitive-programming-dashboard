@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import User from "../model/userModel.js";
 
-const generateAccessAndRefreshTokens = async(userId) {
+const generateAccessAndRefreshTokens = async(userId)=> {
     try {
         const user = await User.findById(userId);
         const accessToken =  user.generateAccessToken();
