@@ -1,6 +1,18 @@
 import bcrypt from "bcrypt";
 import User from "../model/userModel.js";
 
+const generateAccessAndRefreshTokens = async(userId) {
+    try {
+        const user = await User.findById(userId);
+        const accessToken =  user.generateAccessToken();
+        const refreshToken = user.generateRefreshToken();
+        user.refreshToken = refreshToken;
+        await user.save({validateBeforeSave: false});
+        return { accessToken, refreshToken };
+    } catch (error) {
+        res.status(500).json({ message: "Error generating tokens" }); 
+    }
+}
 export const signup = async(req,res)=> {
     try {
          const { name, email, password } = req.body;
@@ -35,7 +47,7 @@ export const login = async(req,res)=> {
             return res.status(400).json({ message: 'Invalid email or password' });
         }
 
-
+        const {accessToken, refreshToken} = await generateAccessAndRefreshTokens(user._id)
         res.status(200).json({ message: 'Login successful',user: {
             email: user.email,
             name: user.name,
