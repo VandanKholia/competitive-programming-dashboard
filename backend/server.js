@@ -17,6 +17,7 @@ mongoose.connect(process.env.MONGO_URI)
     .catch(err=>console.log("Failed to connect to mongoDB ",err))
 
 app.use('/api/auth',authRoutes);
+app.use('/api/leetcode',leetcodeRouter)
 app.use('/api/codeforces',codeforcesRouter)
 app.use('/api/codechef',codechefRouter);
 
