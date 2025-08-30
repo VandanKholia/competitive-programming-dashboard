@@ -1,4 +1,4 @@
-import getLeetCodeFullStats from "../webScraping/leetcode";
+import getLeetCodeFullStats from "../webScraping/leetcode.js";
 
 export default async function fetchLeetcodeData(userName) {
     try {

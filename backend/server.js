@@ -1,16 +1,24 @@
 import express from 'express';
 import cors from 'cors';
-import bcrypt from 'bcrypt';
 import mongoose from 'mongoose'
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import codechefRouter from './routes/codechefRouter.js'
 import codeforcesRouter from './routes/codeforcesRouter.js'
+import cookieParser from 'cookie-parser';
+import leetcodeRouter from './routes/leetcodeRouter.js';
+import platformRouter from './routes/platformRouter.js';
 
 dotenv.config();
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
+
+
 
 mongoose.connect(process.env.MONGO_URI)
     .then(()=> console.log("Connected to mongoDB"))
@@ -20,6 +28,7 @@ app.use('/api/auth',authRoutes);
 app.use('/api/leetcode',leetcodeRouter)
 app.use('/api/codeforces',codeforcesRouter)
 app.use('/api/codechef',codechefRouter);
+app.use('/api/auth', platformRouter);
 
 
 // async function fetchCodeforcesData(userName) {

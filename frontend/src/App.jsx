@@ -5,8 +5,23 @@ import SignUp from "./components/SignUp";
 import PlatformSelect from "./components/PlatformSelect";
 import Home from "./components/Home";
 import LandingPage from "./components/LandingPage";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 function App() {
+  // const [user, setUser] = useState(null);
+
+  // useEffect(()=> {
+  //   axios.get("http://localhost:3000/api/auth/user", { withCredentials: true } )
+  //     .then(response => {
+  //       setUser(response.data);
+  //     })
+  //     .catch(error => {
+  //       console.error("Error fetching user data:", error);
+  //     });
+  // }, []);
+
   return (
     <Router>
       <Routes>

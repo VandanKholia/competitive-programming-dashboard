@@ -3,7 +3,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true},
+  
+  name: { type: String, required: true},
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   platforms:[
@@ -25,7 +26,6 @@ userSchema.methods.generateAccessToken = function() {
   return jwt.sign(
     {
       id: this._id,
-      name: this.name,
       email: this.email,
     },
     process.env.ACCESS_TOKEN_SECRET,
@@ -45,7 +45,7 @@ userSchema.methods.generateRefreshToken = function() {
     }
   )
 };
-userSchema.methods.generateRefreshToken = function() {};
+
 
 const User = mongoose.model('User',userSchema);
 export default User;

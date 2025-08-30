@@ -6,6 +6,8 @@ import ProblemCard from './homeComponents/ProblemCard';
 import axios from 'axios';
 
 const PlatformCodingDashboard = () => {
+  const [user, setUser] = useState(null);
+
     const [selectedPlatform, setSelectedPlatform] = useState('all');
     const [loading, setLoading] = useState(true);
     const [codeforcesData, setCodeforces] = useState(null);
@@ -16,21 +18,76 @@ const PlatformCodingDashboard = () => {
     const[codechefRating,setCodechefRating] = useState(null);
     const[codechefQuestions,setcodechefQuestions] = useState(null);
     const[codechefTcontests,setCodechefTcontests] = useState(null);
-    const storedPlatforms = JSON.parse(localStorage.getItem('user-platforms'));
-    const userName = storedPlatforms;
+    const [platforms, setPlatforms] = useState([]);
 
-    useEffect(() => {
-      setLoading(true);
-        getData();
-    }, []);
+// useEffect(() => {
+//   const fetchPlatforms = async () => {
+//     try {
+//       const res = await axios.get("http://localhost:3000/api/platforms", { withCredentials: true });
+//       setPlatforms(res.data.platforms || []);
+//     } catch (err) {
+//       console.error("Error fetching platforms:", err);
+//     }
+//   };
+
+//   fetchPlatforms();
+// }, []);
+
+    // useEffect(() => {
+    //   setLoading(true);
+    //   console.log(platforms);
+    //     getData();
+    // }, []);
+
+useEffect(()=> {
+  const fetchUserData = async () => {
+    try {
+    const res = await axios.get("http://localhost:3000/api/auth/user", { withCredentials: true });
+    setUser(res.data);
+    setPlatforms(res.data.platforms || []);
+
+    await getData(res.data.platforms);
+    }catch(err) {
+      console.log("error fetching user data:", err);
+      setUser(null);
+
+    }
+  }; 
+  fetchUserData();
+},[])
+
 
     // useEffect(()=>{
     //   console.log(storedPlatforms)
     // },[storedPlatforms]);
+//   const getData = async () => {
+//   try {
+//     setLoading(true);
+//     await Promise.all(storedPlatforms.map(async (platform) => {
+//       if (platform.name === "codeforces") {
+//         const res = await axios.get(`http://localhost:3000/api/codeforces/${platform.userName}`);
+//         setCodeforces(res.data);
+//         setCodeforcesRating(res.data.result[res.data.result.length-1].newRating);
+//         setCodeforcesTContests(res.data.result.length);
+//       }
+//       if (platform.name === "codechef") {
+//         const res = await axios.get(`http://localhost:3000/api/codechef/handle/${platform.userName}`);
+//         setCodechefData(res.data);
+//         setCodechefRating(res.data.currentRating);
+//         setcodechefQuestions(res.data.totalQuestions);
+//         setCodechefTcontests(res.data.ratingData.length);
+//       }
+//     }));
+//   } catch (err) {
+//     console.error("fetch error:", err);
+//   } finally {
+//     setLoading(false);
+//   }
+// };
 
-    const getData = async() => {
+    const getData = async(platforms) => {
       setLoading(true);
-        for(const platform of storedPlatforms) {
+        for(const platform of platforms) {
           if(platform.name == 'codeforces') {
             try {
 
@@ -92,29 +149,31 @@ const PlatformCodingDashboard = () => {
       textColor: 'text-purple-600',
       icon: '👨‍🍳'
     },
-    // {
-    //   name: 'Codeforces',
-    //   solved: 89,
-    //   total: 8500,
-    //   difficulty: {
-    //     div2A: 35,
-    //     div2B: 28,
-    //     div2C: 20,
-    //     div2D: 6
-    //   },
-    //   color: 'from-blue-500 to-cyan-500',
-    //   bgColor: 'bg-blue-50',
-    //   textColor: 'text-blue-600',
-    //   icon: '⚡'
-    // }
+    {
+      name: 'Codeforces',
+      solved: 89,
+      total: 8500,
+      difficulty: {
+        div2A: 35,
+        div2B: 28,
+        div2C: 20,
+        div2D: 6
+      },
+      color: 'from-blue-500 to-cyan-500',
+      bgColor: 'bg-blue-50',
+      textColor: 'text-blue-600',
+      icon: '⚡'
+    }
   ];
 
 const filteredProblems = platformProblems.filter(p =>
-  storedPlatforms?.some(sp => sp.name.toLowerCase() === p.name.toLowerCase())
+  platforms?.some(sp => sp.name.toLowerCase() === p.name.toLowerCase())
+  
 );
+console.log(filteredProblems);
 
 
-  // Contest Rankings Data
+
   const contestRankings = [
     {
       platform: 'LeetCode',
@@ -144,25 +203,26 @@ const filteredProblems = platformProblems.filter(p =>
       icon: '⭐',
       badge: '3 Star'
     },
-    // {
-    //   platform: 'Codeforces',
-    //   currentRating: codeforcesRating,
-    //   maxRating: codeforcesRating,
-    //   rank: 'Pupil',
-    //   globalRank: 15672,
-    //   contestsParticipated: codeforcesTContests,
-    //   bestRank: 789,
-    //   color: 'from-blue-500 to-cyan-500',
-    //   bgColor: 'bg-blue-100',
-    //   textColor: 'text-blue-600',
-    //   icon: '🐶',
-    //   badge: 'Pupil'
-    // },
+    {
+      platform: 'Codeforces',
+      currentRating: codeforcesRating,
+      maxRating: codeforcesRating,
+      rank: 'Pupil',
+      globalRank: 15672,
+      contestsParticipated: codeforcesTContests,
+      bestRank: 789,
+      color: 'from-blue-500 to-cyan-500',
+      bgColor: 'bg-blue-100',
+      textColor: 'text-blue-600',
+      icon: '🐶',
+      badge: 'Pupil'
+    },
 
   ];
 
   const filteredContests = contestRankings.filter(c =>
-  storedPlatforms?.some(sp => sp.name.toLowerCase() === c.platform.toLowerCase())
+  platforms?.some(sp => sp.name.toLowerCase() === c.platform.toLowerCase())
+
 );
 
 

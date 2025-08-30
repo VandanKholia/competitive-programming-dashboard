@@ -17,8 +17,6 @@ function Login() {
         if (result.data.message === "Login successful") {
           const userData = result.data;
           console.log(userData.user);
-          localStorage.setItem("user-email", userData.user.email);
-          localStorage.setItem("user-platforms", JSON.stringify(userData.user.platforms));
           
           navigate("/home");
           alert("Login successful");

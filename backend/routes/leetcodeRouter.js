@@ -1,9 +1,9 @@
 import express from "express";
-import fetchLeetcodeData from "../controller/leetcodeController";
+import fetchLeetcodeData from "../controller/leetcodeController.js";
 
 const router = express.Router();
 
-router.get(':/username', async (req,res) => {
+router.get('/:username', async (req,res) => {
     const username = req.params.username;
     try {
         const data = await fetchLeetcodeData(username);

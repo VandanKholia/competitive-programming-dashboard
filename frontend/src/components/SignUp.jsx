@@ -11,12 +11,11 @@ function SignUp() {
     const [password,setPassword] = useState("");
     const navigate = useNavigate();
 
-    const handleSignUp=(e)=>{
+ const handleSignUp=(e)=>{
         e.preventDefault();
-        axios.post("http://localhost:3000/api/auth/signup",{name,email,password})
+        axios.post("http://localhost:3000/api/auth/signup",{name,email,password}, { withCredentials: true })
         .then(result=>{
             console.log("User created successfully");
-            localStorage.setItem("user-email",email);
             navigate("/platforms");
         }).catch(err=>{
           if(err.response && err.response.status === 400) {
