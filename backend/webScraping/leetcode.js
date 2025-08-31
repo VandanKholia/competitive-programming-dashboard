@@ -1,4 +1,5 @@
 import axios from "axios";
+import { json } from "express";
 
 export default async function getLeetCodeFullStats(username) {
   const url = "https://leetcode.com/graphql";
@@ -24,6 +25,10 @@ export default async function getLeetCodeFullStats(username) {
         attendedContestsCount
         rating
         globalRanking
+        badge{
+          name
+        }
+        
       }
     
     }
@@ -47,26 +52,31 @@ export default async function getLeetCodeFullStats(username) {
     const mediumSolved = matchedUser.submitStats.acSubmissionNum[2].count;
     const hardSolved = matchedUser.submitStats.acSubmissionNum[3].count;
 
-    console.log("Username:", matchedUser.username);
-    console.log("Total solved:", totalSolved);
-    console.log("Easy:", easySolved, "Medium:", mediumSolved, "Hard:", hardSolved);
-    console.log("Ranking:", matchedUser.profile.ranking);
-    console.log("Contest stats:", userContestRanking);
+    const rating = userContestRanking ? userContestRanking.rating : null;
+    const globalRanking = userContestRanking ? userContestRanking.globalRanking : null;
+    const badgeName = userContestRanking? userContestRanking.badge.name : null;
 
-    const leetcodeData = {
-        username,
-        totalSolved,
-        easySolved,
-        mediumSolved,
-        hardSolved,
-        userContestRanking
-    }
-    console.log(leetcodeData)
-    return leetcodeData;
+    // const leetcodeData = {
+    //     username,
+    //     totalSolved,
+    //     easySolved,
+    //     mediumSolved,
+    //     hardSolved,
+    //     userContestRanking
+    // }
+    return {
+        "username": username,
+        "totalSolved":totalSolved,
+        "easySolved":easySolved,
+        "mediumSolved":mediumSolved,
+        "hardSolved":hardSolved,
+        "rating": rating,
+        "globalRanking":globalRanking,
+        "badgeName":badgeName,
+
+    };
   } catch (error) {
     console.error("Error fetching data:", error.message);
-    if (error.response) console.error(error.response.data);
   }
 }
 
-getLeetCodeFullStats("Kholia_Vandan");

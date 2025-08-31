@@ -6,11 +6,10 @@ import { authenticateJWT } from '../middlewares/authMiddleware.js';
 const router = express.Router()
 
 
-router.post('/signup', signup);
-router.post('/login', login);
-// router.post('/platforms', platforms);
+router.post('/signup',signup);
+router.post('/login',login);
 router.post('/refresh-token', refreshAccessToken);
-router.post('/logout', logout);
+router.post('/logout', authenticateJWT, logout);
 
 router.get('/user', authenticateJWT, async (req,res) => {
      try {

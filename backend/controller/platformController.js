@@ -3,7 +3,6 @@ import User from "../model/userModel.js"
 export const setPlatforms = async (req, res) => {
   try {
     const userId = req.user.id;
-    console.log("User ID from token:", userId); 
     const { platforms } = req.body;
 
     const user = await User.findById(userId);
@@ -20,7 +19,7 @@ export const setPlatforms = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-// controllers/platformController.js
+
 export const getPlatforms = async (req, res) => {
   try {
     const userId = req.user.id; 

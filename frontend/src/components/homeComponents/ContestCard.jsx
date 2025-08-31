@@ -1,5 +1,5 @@
   import React from "react";
-
+  import { Trophy, Target, Star, TrendingUp, Medal, Award, Crown, Zap } from 'lucide-react';  
   const ContestCard = ({ contest }) => (
     <div className={`${contest.bgColor} rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-all duration-300 hover:scale-105`}>
       <div className="flex items-center justify-between mb-6">

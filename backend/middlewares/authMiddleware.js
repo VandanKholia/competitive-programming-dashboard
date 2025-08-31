@@ -1,22 +1,23 @@
 import jwt from "jsonwebtoken";
+import User from "../model/userModel.js";
 
-export const authenticateJWT = (req, res, next) => {
-  const token = req.cookies?.accessToken;
-  console.log("🟢 Cookie token received:", token);
-
-  if (!token) {
-    return res.status(401).json({ message: "Access token missing" });
-  }
-
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) {
-      console.error("🔴 JWT verification failed:", err.message);
-      return res.status(403).json({ message: "Invalid access token" });
+export const authenticateJWT = async(req, res, next) => {
+  try {
+    const token = req.cookies?.accessToken;
+    if(!token) {
+      return res.status(401).json({message: "Access token missing"});
     }
-    console.log("✅ JWT verified, user payload:", user);
+    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+    const user = await User.findById(decodedToken?.id);
+  
+    if(!user) {
+      return res.status(401).json({message: "Invalid access token"});
+    }
     req.user = user;
     next();
-  });
+  } catch (error) {
+      return res.status(401).json({message: error?.message || "Invalid access token"});
+  }
 };
 
 // export const authenticateJWT = async(req,res,next) => {

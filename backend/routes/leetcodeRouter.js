@@ -7,9 +7,9 @@ router.get('/:username', async (req,res) => {
     const username = req.params.username;
     try {
         const data = await fetchLeetcodeData(username);
-        res.json(data);
+        return res.json(data);
     } catch(err) {
-        res.status(500).json({ error: 'Failed to fetch Codeforces data' });
+        return res.status(500).json({ error: 'Failed to fetch LeetCode data' });
     }
     
 });
