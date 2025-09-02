@@ -1,9 +1,8 @@
-import getLeetCodeFullStats from "../webScraping/leetcode.js";
+import leetcodeScraper from "../webScraping/leetcodeScraper.js";
 
-export default async function fetchLeetcodeData(userName) {
+export default async function leetcodeController(userName) {
     try {
-        const data = await getLeetCodeFullStats(userName);
-        console.log(data);
+        const data = await leetcodeScraper(userName);
         return data;
     } catch (error) {
         console.log(error)

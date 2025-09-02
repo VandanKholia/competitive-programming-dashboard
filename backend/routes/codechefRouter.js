@@ -1,23 +1,17 @@
-// codechefRouter.js
 import express from 'express';
-import { JSDOM } from 'jsdom';
+import codechefController from '../controller/codechefController.js';
 const router = express.Router();
-import fecher from '../controller/codechefController.js';
 
-router.get("/handle/:handle", async (req, res) => {
-  try {
-    if (req.params.handle === "favicon.ico")
-      return res.send({ success: false, error: "invalid handle" });
 
-    let resd = await fecher(req.params.handle);
-    while (resd.status === 429) {
-      for (let i = 0; i < 1000000; i++) {}
-      resd = await fecher(req.params.handle);
+router.get('/:username', async (req,res) => {
+    const username = req.params.username;
+    try {
+        const data = await codechefController(username);
+        return res.json(data);
+    } catch(err) {
+        return res.status(500).json({ error: 'Failed to fetch codechef data' });
     }
-    res.send(resd);
-  } catch (err) {
-    res.send({ success: false, error: err });
-  }
+    
 });
 
 export default router;

@@ -12,17 +12,12 @@ function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3000/api/auth/login", { email, password })
+    axios.post("http://localhost:3000/api/auth/login", { email, password },{withCredentials: true})
       .then(result => {
-        if (result.data.message === "Login successful") {
           const userData = result.data;
           console.log(userData.user);
-          
           navigate("/home");
           alert("Login successful");
-        } else {
-          alert(result.data.message);
-        }
       })
       .catch(err => {
         console.error(err);
