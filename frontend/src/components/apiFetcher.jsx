@@ -40,7 +40,7 @@ export const fetchCodechefData = async (username) => {
 
 export const fetchLeetCodeData = async (username) => {
   try {
-    const res = await axios.get(`http://localhost:3000/api/leetcode/${username}`);
+    const res = await axios.get(`http://localhost:3000/api/leetcode/paramdotcom`);
     return {
       rating: res.data.rating,
       // globalRanking: res.data.globalRanking,

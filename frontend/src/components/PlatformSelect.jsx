@@ -62,7 +62,6 @@ function PlatformSelect() {
 
           <button type="submit" className="btn btn-primary w-50 fs-6">Submit</button>
           <br />
-          {/* <Link to="/Login">Already have an account?</Link> */}
         </form>
       </div>
     </div>
