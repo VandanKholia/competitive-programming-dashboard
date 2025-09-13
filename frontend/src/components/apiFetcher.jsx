@@ -10,6 +10,7 @@ export const fetchCodeforcesData = async (username) => {
       rating: res.data.rating,
       maxRating: res.data.maxRating,
       rankName: res.data.rank,
+      totalContests: res.data.totalContest,
       totalSolved: res.data.solvedCount,
       ratingHistory: res.data.ratingHistory
     };

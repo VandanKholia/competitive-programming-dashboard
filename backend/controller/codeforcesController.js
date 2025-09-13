@@ -30,13 +30,17 @@ export default async function codeforcesController(userName) {
     const ratingRes = await fetch(ratingUrl);
     const ratingData = await ratingRes.json();
 
-    const ratingHistory =
-      ratingData.status === "OK"
-        ? ratingData.result.map((contest) => ({
-            time: contest.ratingUpdateTimeSeconds * 1000,
-            rating: contest.newRating,
-          }))
-        : [];
+   let ratingHistory = [];
+    let contestsParticipated = 0;
+
+    if (ratingData.status === "OK") {
+      ratingHistory = ratingData.result.map((contest) => ({
+        time: contest.ratingUpdateTimeSeconds * 1000,
+        rating: contest.newRating,
+      }));
+      contestsParticipated = ratingData.result.length;
+    }
+
     // 3. Return combined data
     return {
       handle: user.handle,
@@ -46,6 +50,7 @@ export default async function codeforcesController(userName) {
       maxRating: user.maxRating,
       rank: user.rank,
       solvedCount: solvedSet.size,
+      totalContest: contestsParticipated,
       ratingHistory: ratingHistory
     };
     
