@@ -1,11 +1,18 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Code2 } from 'lucide-react';
+import { Code2 } from 'lucide-react';
 import { useEffect } from 'react';
 import ContestCard from './homeComponents/ContestStats.jsx';
 import ProblemStats from './homeComponents/ProblemStats.jsx';
 import ContestStats from './homeComponents/ContestStats.jsx';
+import ContestCard from './homeComponents/ContestStats.jsx';
+import ProblemStats from './homeComponents/ProblemStats.jsx';
+import ContestStats from './homeComponents/ContestStats.jsx';
 import { fetchCodeforcesData, fetchCodechefData, fetchLeetCodeData } from './apiFetcher.jsx'
+import Loader from './Loader.jsx';
+import { Trophy } from 'lucide-react';
+
 import Loader from './Loader.jsx';
 import { Trophy } from 'lucide-react';
 
@@ -22,12 +29,26 @@ const PlatformCodingDashboard = () => {
     // const[codeforcesRating,setCodeforcesRating] = useState(null);
     // const[codeforcesTContests,setCodeforcesTContests] = useState(null);
     // const[codeforcesSolved,setCodeforcesSolved] = useState(null);
+    // const [totalQuestionsSolved, setTotalQuestionsSolved] = useState(0);
+    // const [selectedPlatform, setSelectedPlatform] = useState('all');
+
+    // const [codeforcesData, setCodeforcesData] = useState(null);
+    // const[codeforcesRating,setCodeforcesRating] = useState(null);
+    // const[codeforcesTContests,setCodeforcesTContests] = useState(null);
+    // const[codeforcesSolved,setCodeforcesSolved] = useState(null);
 
     // const[codechefData,setCodechefData] = useState(null);
     // const[codechefRating,setCodechefRating] = useState(null);
     // const[codechefSolved,setcodechefSolved] = useState(null);
     // const[codechefTcontests,setCodechefTcontests] = useState(null);
+    // const[codechefData,setCodechefData] = useState(null);
+    // const[codechefRating,setCodechefRating] = useState(null);
+    // const[codechefSolved,setcodechefSolved] = useState(null);
+    // const[codechefTcontests,setCodechefTcontests] = useState(null);
 
+    // const[leetcodeData, setLeetcodeData] = useState(null);
+    // const[leetcodeSolved, setLeetcodeSolved] = useState(null);
+    // const[leetcodeRating, setLeetcodeRating] = useState(null);
     // const[leetcodeData, setLeetcodeData] = useState(null);
     // const[leetcodeSolved, setLeetcodeSolved] = useState(null);
     // const[leetcodeRating, setLeetcodeRating] = useState(null);
@@ -59,12 +80,28 @@ const PlatformCodingDashboard = () => {
         const res = await axios.get("http://localhost:3000/api/auth/user", { withCredentials: true });
         setUser(res.data);
         setPlatforms(res.data.platforms || []);
+    useEffect(()=> {
+      const fetchUserData = async () => {
+        try {
+        const res = await axios.get("http://localhost:3000/api/auth/user", { withCredentials: true });
+        setUser(res.data);
+        setPlatforms(res.data.platforms || []);
 
         await getData(res.data.platforms);
         }catch(err) {
           console.log("error fetching user data:", err);
           setUser(null);
+        await getData(res.data.platforms);
+        }catch(err) {
+          console.log("error fetching user data:", err);
+          setUser(null);
 
+        }finally{
+          setLoading(false);
+        }
+      }; 
+      fetchUserData();
+    },[])
         }finally{
           setLoading(false);
         }
@@ -153,5 +190,6 @@ const PlatformCodingDashboard = () => {
       </>
     )
 };
+    
     
 export default PlatformCodingDashboard;
