@@ -5,6 +5,7 @@ import SignUp from "./components/SignUp";
 import PlatformSelect from "./components/PlatformSelect";
 import Home from "./components/Home";
 import LandingPage from "./components/LandingPage";
+import PlatformEdit from './components/PlatformEdit.jsx'
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
@@ -29,6 +30,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login/>}></Route>
         <Route path="/platforms" element={<PlatformSelect/>}></Route>
+        <Route path="/edit-platforms" element={<PlatformEdit />}></Route>
         <Route path="/home" element={<Home/>}></Route>
         
 

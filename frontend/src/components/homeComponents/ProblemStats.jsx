@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Code, CheckCircle } from 'lucide-react';
+import { Code, CheckCircle, ChartColumnIncreasing, } from 'lucide-react';
+import { SiLeetcode, SiCodechef, SiCodeforces } from "react-icons/si";
 import Loader from '../Loader.jsx';
 
 const ProblemStats = ({ problemData={} }) => {
@@ -8,18 +9,6 @@ const ProblemStats = ({ problemData={} }) => {
   const codeforcesSolved = problemData?.codeforces?.totalSolved || 0;
   const codechefSolved = problemData?.codechef?.totalSolved || 0;
   const totalProblems = leetcodeSolved + codeforcesSolved + codechefSolved;
-
-  // useEffect(()=> {
-  //   if(problemData && Object.keys(problemData).length>0) {
-
-  //     console.log("problem stats",problemData);
-  //   }
-
-  // },[problemData]);
-
-  // if (!problemData || Object.keys(problemData).length === 0) {
-  // return <><Loader/></>
-  // }
 
   const platforms = [
     {
@@ -30,7 +19,7 @@ const ProblemStats = ({ problemData={} }) => {
       bgColor: 'bg-yellow-50',
       bgGradient: 'from-yellow-100 to-yellow-50',
       borderColor: 'border-orange-200',
-      icon: Code
+      icon: SiLeetcode
     },
     {
       name: 'Codeforces',
@@ -40,7 +29,7 @@ const ProblemStats = ({ problemData={} }) => {
       bgColor: 'bg-blue-50',
       bgGradient: 'from-blue-100 to-blue-100',
       borderColor: 'border-blue-200',
-      icon: Code
+      icon: SiCodeforces
     },
     {
       name: 'CodeChef',
@@ -50,7 +39,7 @@ const ProblemStats = ({ problemData={} }) => {
       bgColor: 'bg-amber-50',
       bgGradient: 'from-amber-50 via-yellow-25 to-orange-50',
       borderColor: 'border-amber-200',
-      icon: Code
+      icon: SiCodechef
     }
   ];
 
@@ -113,11 +102,6 @@ const ProblemStats = ({ problemData={} }) => {
 };
 
 export default ProblemStats;
-
-
-
-
-  // const ProblemCard = ({ platform }) => (
   //   <div className={`${platform.bgColor} rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-all duration-300 hover:scale-105`}>
   //     <div className="flex items-center justify-between mb-4">
   //       <div className="flex items-center space-x-3">

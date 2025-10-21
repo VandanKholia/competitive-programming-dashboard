@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
 import { Trophy, Target, Star, TrendingUp } from 'lucide-react';
 import { useMemo } from 'react';
+import { SiLeetcode, SiCodechef, SiCodeforces } from "react-icons/si";
+
 const ContestStats = ({ contestData={} }) => {
 
     useEffect(()=> {
@@ -12,26 +14,7 @@ const ContestStats = ({ contestData={} }) => {
       }
   
     },[contestData]);
-  // const contestData = {
-  //   leetcode: {
-  //     rating: 1847,
-  //     contests: 42,
-  //     level: 'Knight',
-  //     rank: 'Top 15%'
-  //   },
-  //   codeforces: {
-  //     rating: 1456,
-  //     contests: 67,
-  //     level: 'Specialist',
-  //     rank: 'Cyan'
-  //   },
-  //   codechef: {
-  //     rating: 1923,
-  //     contests: 28,
-  //     level: '4 Star',
-  //     rank: 'Blue'
-  //   }
-  // };
+
 const ratingHistory = useMemo(() => {
 
   const formatDate = (d) => {
@@ -68,16 +51,7 @@ const ratingHistory = useMemo(() => {
 
   return Object.values(merged).sort((a, b) => new Date(a.month) - new Date(b.month));
 }, [contestData]);
-
-
-
-  // const ratingHistory = [
-  //   { month: 'Jan', leetcode: 1650, codeforces: 1280, codechef: 1750 },
-  //   { month: 'Feb', leetcode: 1720, codeforces: 1340, codechef: 1820 },
-  //   { month: 'Mar', leetcode: 1780, codeforces: 1420, codechef: 1880 },
-  //   { month: 'Apr', leetcode: 1820, codeforces: 1456, codechef: 1923 },
-  //   { month: 'May', leetcode: 1847, codeforces: 1456, codechef: 1923 }
-  // ];
+console.log(contestData);
 
   const contestParticipation = [
     { name: 'LeetCode', value: contestData.leetcode.totalContests, color: '#f9de16ff' },
@@ -97,7 +71,7 @@ const ratingHistory = useMemo(() => {
       bgColor: 'bg-orange-100',
       borderColor: 'border-orange-300',
       textColor: 'text-orange-700',
-      icon: Trophy
+      icon: SiLeetcode
     },
     {
       name: 'Codeforces',
@@ -110,7 +84,7 @@ const ratingHistory = useMemo(() => {
       bgColor: 'bg-blue-100',
       bgGradient: 'from-blue-50 via-cyan-25 to-teal-50',
       textColor: 'text-blue-700',
-      icon: Target
+      icon: SiCodeforces
     },
     {
       name: 'CodeChef',
@@ -123,7 +97,7 @@ const ratingHistory = useMemo(() => {
       bgColor: 'bg-amber-100',
       borderColor: 'border-amber-300',
       textColor: 'text-amber-700',
-      icon: Star
+      icon: SiCodechef
     }
   ];
 
@@ -143,9 +117,6 @@ const ratingHistory = useMemo(() => {
                 <div className={`p-3 ${platform.bgColor} rounded-xl`}>
                   <Icon className={`w-6 h-6 ${platform.textColor}`} />
                 </div>
-                <span className={`px-3 py-1 ${platform.bgColor} rounded-full text-sm font-medium ${platform.textColor} shadow-sm`}>
-                  {platform.level}
-                </span>
               </div>
               
               <h4 className={`text-lg font-semibold ${platform.textColor} mb-3`}>{platform.name}</h4>
@@ -167,12 +138,6 @@ const ratingHistory = useMemo(() => {
                 </div>
               </div>
               
-              <div className="mt-4 w-full bg-white/60 rounded-full h-2 shadow-inner">
-                <div
-                  className={`h-2 rounded-full bg-gradient-to-r ${platform.color} transition-all duration-700`}
-                  style={{ width: `${Math.min((platform.rating / 2000) * 100, 100)}%` }}
-                ></div>
-              </div>
             </div>
           );
         })}
@@ -289,8 +254,6 @@ const ratingHistory = useMemo(() => {
           </div>
         </div>
       </div>
-
-      {/* Monthly Contest Performance */}
       
     </div>
   );
