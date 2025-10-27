@@ -1,4 +1,4 @@
-# OnePlace - Competitive Programming Dashboard
+# CodeProfile - Competitive Programming Dashboard
 
 A full-stack dashboard to track competitive programming profiles (Codeforces, CodeChef, LeetCode). This repository contains a Node.js/Express backend that scrapes or queries platform data and a React + Vite frontend.
 
