@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Code2, ChevronDown,Menu, LogOut, Settings } from 'lucide-react';
+import { Code2, ChevronDown, Menu, LogOut, Settings } from 'lucide-react';
+import logo from '../../assets/logo.png';
 
 const Navbar = ({ onLogout, onEditPlatforms }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -32,11 +33,16 @@ const Navbar = ({ onLogout, onEditPlatforms }) => {
       <div className="container px-1 py-4 max-w-7xl">
         <div className="flex items-center justify-between">
           {/* Logo*/}
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg">
-              <Code2 className="w-6 h-6 text-white" />
+          <div className="flex items-center">
+            <div className="p-1 rounded-lg bg-blue-100 mr-2">
+              <img src={logo} alt="CodeProfile Logo" className="w-10 h-10" />
             </div>
-            <h1 className="text-2xl font-bold text-slate-800">CodeProfile</h1>
+            <h1
+              className="text-3xl text-black-600 tracking-tight mt-2"
+              style={{ fontFamily: "'Audiowide', sans-serif" }}
+            >
+              CodeProfile
+            </h1>
           </div>
 
           {/* User Menu */}
@@ -45,11 +51,10 @@ const Navbar = ({ onLogout, onEditPlatforms }) => {
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               className=""
             >
-             
-              <Menu 
-                className={`w-10 h-7 transition-transform duration-200 ${
-                  isDropdownOpen ? 'rotate-90' : ''
-                }`} 
+
+              <Menu
+                className={`w-10 h-7 transition-transform duration-200 ${isDropdownOpen ? 'rotate-90' : ''
+                  }`}
               />
             </button>
 
@@ -65,9 +70,9 @@ const Navbar = ({ onLogout, onEditPlatforms }) => {
                   </div>
                   <span className="text-slate-700 font-medium">Edit Platforms</span>
                 </button>
-                
+
                 <div className="h-px bg-slate-200"></div>
-                
+
                 <button
                   onClick={handleLogout}
                   className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-colors duration-150 text-left"

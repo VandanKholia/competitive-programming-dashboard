@@ -7,6 +7,9 @@ router.get('/:username', async (req,res) => {
     const username = req.params.username;
     try {
         const data = await codechefController(username);
+        if(data === undefined) {
+            return res.status(500).json({ error: 'Failed to fetch codechef data' });
+        }
         return res.json(data);
     } catch(err) {
         return res.status(500).json({ error: 'Failed to fetch codechef data' });

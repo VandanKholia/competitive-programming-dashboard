@@ -47,13 +47,14 @@ export default async function getLeetCodeFullStats(username) {
       query,
       variables: { username }
     });
-
+    
     const { matchedUser, userContestRanking } = response.data.data;
-    const history = response.data.data.userContestRankingHistory;
-    if (!history || history.length === 0) {
-      console.log("No contest history found.");
-      return;
+
+    if(!matchedUser) {
+      return null;
     }
+
+    const history = response.data.data.userContestRankingHistory;
       history.forEach(entry => {
       if (entry.attended) {
         // console.log(
@@ -61,10 +62,6 @@ export default async function getLeetCodeFullStats(username) {
         // );
       }
     });
-    if (!matchedUser) {
-      console.log("User not found");
-      return;
-    }
     const ratingsHistory = history.filter(entry => entry.attended).map(entry=>({
       date: new Date(entry.contest.startTime * 1000),
       rating: entry.rating

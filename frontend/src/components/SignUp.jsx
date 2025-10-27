@@ -15,7 +15,6 @@ function SignUp() {
 
     axios.post("http://localhost:3000/api/auth/signup", { name, email, password }, { withCredentials: true })
       .then(result => {
-        console.log("User created successfully");
         navigate("/platforms");
         alert("Account created successfully!");
       })

@@ -3,8 +3,8 @@ import { JSDOM } from 'jsdom';
 const getCodechefStats = async (handle) => {
     try {
         const resdata = await fetch(`https://www.codechef.com/users/${handle}`);
+        const d = await resdata.text();
         if (resdata.status === 200) {
-            const d = await resdata.text();
             const dom = new JSDOM(d);
             const document = dom.window.document;
             const heatMapDataStart =

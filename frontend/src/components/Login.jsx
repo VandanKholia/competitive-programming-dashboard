@@ -10,14 +10,11 @@ function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    
-      console.log("Login attempt:", { email, password });
       setIsLoading(false);
      
       axios.post("http://localhost:3000/api/auth/login", { email, password }, { withCredentials: true })
         .then(result => {
           const userData = result.data;
-          console.log(userData.user);
           navigate("/home");
           alert("Login successful");
         })
@@ -126,12 +123,7 @@ function Login() {
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="text-center mt-6">
-          <p className="text-gray-500 text-sm">
-            © 2025 Contest Tracker. Track your progress, achieve your goals.
-          </p>
-        </div>
+        
         
       </div>
     </div>

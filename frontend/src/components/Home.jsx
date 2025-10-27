@@ -81,7 +81,7 @@ const PlatformCodingDashboard = () => {
   };
 
   const handleEditPlatforms = () => {
-    navigate('/edit-platform')
+    navigate('/platforms');
   }
   return (
     <>

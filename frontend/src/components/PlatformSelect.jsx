@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { SiLeetcode, SiCodechef, SiCodeforces } from "react-icons/si";
@@ -10,18 +10,83 @@ function PlatformSelect() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    // Fetch existing platform data if any
+    axios.get("http://localhost:3000/api/auth/platforms", { withCredentials: true })
+    .then(result=> {
+      setCodeforces(result.data.platforms.find(p => p.name === "codeforces")?.userName || "");
+      setCodechef(result.data.platforms.find(p => p.name === "codechef")?.userName || "");
+      setLeetcode(result.data.platforms.find(p => p.name === "leetcode")?.userName || "");
+    });
+  }, []);
+
+  //Checking if the username is valid for the platform
+  const checkValidUser = async(platform, username) => { 
+    try {
+      if(platform === "codeforces") {
+        const res = await axios.get(`http://localhost:3000/api/codeforces/${username}`);
+        return res.status === 200 || res.status === 201;
+      }
+      if(platform === "codechef") {
+        const res = await axios.get(`http://localhost:3000/api/codechef/${username}`);
+        return res.status === 200 || res.status === 201;
+      }
+      if(platform === "leetcode") {
+        const res = await axios.get(`http://localhost:3000/api/leetcode/${username}`);
+        return res.status === 200 || res.status === 201;
+      }
+
+      return false;
+
+    } catch (error) {
+      console.log("Error validating user:", error);
+      return false;
+    }
+    
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
     const selectedPlatforms = [];
-    if (codeforces.trim()) selectedPlatforms.push({ name: "codeforces", userName: codeforces });
-    if (codechef.trim()) selectedPlatforms.push({ name: "codechef", userName: codechef });
-    if (leetcode.trim()) selectedPlatforms.push({ name: "leetcode", userName: leetcode });
 
-    console.log("Selected platforms:", selectedPlatforms);
+    if (codeforces.trim()) {
+      const isValid = await checkValidUser("codeforces", codeforces);
+      if (isValid) {
+        selectedPlatforms.push({ name: "codeforces", userName: codeforces })
+      }else {
+        alert("Invalid Codeforces username");
+        setIsLoading(false);
+        return;
+      }
+    };
 
-    axios.post("http://localhost:3000/api/auth/platforms",
+    if (codechef.trim()) {
+      const isValid = await checkValidUser("codechef", codechef);
+      if (isValid) {
+        selectedPlatforms.push({ name: "codechef", userName: codechef })
+      }else {
+        alert("Invalid CodeChef username");
+        setIsLoading(false);
+        return;
+      }
+    }
+    if (leetcode.trim()) {
+      const isValid = await checkValidUser("leetcode", leetcode);
+      if (isValid) {
+        selectedPlatforms.push({ name: "leetcode", userName: leetcode });
+      } else {
+        alert("Invalid LeetCode username");
+        setIsLoading(false);
+        return;
+      }
+    }
+    if(selectedPlatforms.length === 0){
+      alert("Please select at least one platform");
+      setIsLoading(false);
+      return;
+    }
+    await axios.post("http://localhost:3000/api/auth/platforms",
       { platforms: selectedPlatforms },
       { withCredentials: true }
     ).then(result => {
@@ -32,8 +97,8 @@ function PlatformSelect() {
     }).finally(() => {
       setIsLoading(false);
     });
+    
   };
-
   const platforms = [
     {
       name: "LeetCode",

@@ -31,14 +31,17 @@ export const login = async (req, res) => {
         }
 
         const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(user._id)
-        const options = {
+        const isProd = process.env.NODE_ENV === 'production';
+        const cookieOptions = {
             httpOnly: true,
-            secure: true
+            secure: isProd,
+            sameSite: isProd ? 'none' : 'lax'
         }
 
-        return res.status(200).cookie("accessToken", accessToken,options)
-        .cookie("refreshToken",refreshToken, options)
-        .json({
+        return res.status(200)
+          .cookie("accessToken", accessToken, cookieOptions)
+          .cookie("refreshToken", refreshToken, cookieOptions)
+          .json({
             message: "Login Successful",
             user: {id: user._id, email: user.email}
         });
@@ -116,7 +119,7 @@ export const refreshAccessToken = async (req, res) => {
         const accessToken = user.generateAccessToken();
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
-            sameSite: 'strict',
+            sameSite: 'lax',
             maxAge: 15 * 60 * 1000
         });
         res.json({ accessToken });

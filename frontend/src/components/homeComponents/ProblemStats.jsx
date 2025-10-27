@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
-import { Code, CheckCircle, ChartColumnIncreasing, } from 'lucide-react';
+import React from 'react';
+import { Code, CheckCircle, Target } from 'lucide-react';
 import { SiLeetcode, SiCodechef, SiCodeforces } from "react-icons/si";
-import Loader from '../Loader.jsx';
 
 const ProblemStats = ({ problemData={} }) => {
 
@@ -11,54 +10,61 @@ const ProblemStats = ({ problemData={} }) => {
   const totalProblems = leetcodeSolved + codeforcesSolved + codechefSolved;
 
   const platforms = [
-    {
+    problemData.leetcode && {
       name: 'LeetCode',
       count: leetcodeSolved,
-      color: 'from-yellow-400 to-yellow-600',
-      textColor: 'text-yellow-600',
-      bgColor: 'bg-yellow-50',
-      bgGradient: 'from-yellow-100 to-yellow-50',
-      borderColor: 'border-orange-200',
+      textColor: 'text-yellow-700',
+      bgColor: 'bg-yellow-200',
+      borderColor: 'border-yellow-600',
+      progressColor: 'bg-yellow-500',
+      iconColor: 'bg-yellow-100',
       icon: SiLeetcode
     },
-    {
+    problemData.codeforces && {
       name: 'Codeforces',
       count: codeforcesSolved,
-      color: 'from-blue-400 to-blue-600',
-      textColor: 'text-blue-600',
-      bgColor: 'bg-blue-50',
-      bgGradient: 'from-blue-100 to-blue-100',
+      textColor: 'text-blue-700',
+      bgColor: 'bg-blue-200',
       borderColor: 'border-blue-200',
+      progressColor: 'bg-blue-500',
+      iconColor: 'bg-blue-100',
       icon: SiCodeforces
     },
-    {
+    problemData.codechef && {
       name: 'CodeChef',
       count: codechefSolved,
-      color: 'from-amber-400 to-amber-600',
-      textColor: 'text-amber-600',
-      bgColor: 'bg-amber-50',
-      bgGradient: 'from-amber-50 via-yellow-25 to-orange-50',
-      borderColor: 'border-amber-200',
+      textColor: 'text-orange-700',
+      bgColor: 'bg-orange-200',
+      borderColor: 'border-orange-200',
+      progressColor: 'bg-orange-500',
+      iconColor: 'bg-orange-100',
       icon: SiCodechef
     }
-  ];
+  ].filter(Boolean);
 
   return (
     <div className="space-y-6">
       {/* Total Problems Card */}
-      <div className="bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 rounded-2xl p-8 shadow-lg border border-purple-100 hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-lg font-medium text-purple-700 mb-2">Total Problems Solved</h3>
-            <div className="flex items-center gap-3">
-              <span className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+      <div className="relative bg-white rounded-2xl p-8 shadow-xl border-2 border-indigo-200 overflow-hidden hover:shadow-2xl transition-all duration-300">
+        {/* Decorative corner accent */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-100 rounded-bl-full opacity-50"></div>
+        <div className="absolute bottom-0 left-0 w-24 h-24 bg-purple-100 rounded-tr-full opacity-50"></div>
+        
+        <div className="relative flex items-center">
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-3">
+              <h3 className="text-lg font-semibold text-gray-700 uppercase tracking-wide">Total Problems Solved</h3>
+            </div>
+            <div className="flex items-baseline gap-4">
+              <span className="text-6xl font-black text-indigo-600">
                 {totalProblems}
               </span>
-              <CheckCircle className="w-8 h-8 text-emerald-500" />
+
             </div>
           </div>
-          <div className="w-24 h-24 bg-gradient-to-br from-purple-200 to-blue-200 rounded-2xl flex items-center justify-center shadow-inner">
-            <Code className="w-12 h-12 text-purple-700" />
+          
+          <div className="w-28 h-28 bg-indigo-600 rounded-full flex items-center justify-center shadow-lg">
+            <Target className="w-14 h-14 text-white" />
           </div>
         </div>
       </div>
@@ -72,10 +78,10 @@ const ProblemStats = ({ problemData={} }) => {
           return (
             <div
               key={platform.name}
-              className={`bg-gradient-to-br ${platform.bgGradient} rounded-xl p-6 shadow-md border ${platform.borderColor} hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]`}
+              className={`${platform.bgColor} rounded-xl p-6 shadow-md border ${platform.borderColor} hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]`}
             >
-              <div className="flex items-center justify-between mb-4">
-                <div className={`p-3 ${platform.bgColor} rounded-xl shadow-sm`}>
+              <div className="flex items-center justify-between mb-2">
+                <div className={`p-3 ${platform.iconColor} rounded-xl`}>
                   <Icon className={`w-6 h-6 ${platform.textColor}`} />
                 </div>
                 <span className={`text-sm font-medium ${platform.textColor} bg-white/70 px-2 py-1 rounded-full`}>{percentage}%</span>
@@ -89,7 +95,7 @@ const ProblemStats = ({ problemData={} }) => {
               
               <div className="w-full bg-white/50 rounded-full h-2 shadow-inner">
                 <div
-                  className={`h-2 rounded-full bg-gradient-to-r ${platform.color} transition-all duration-500`}
+                  className={`h-2 rounded-full ${platform.progressColor} transition-all duration-500`}
                   style={{ width: `${percentage}%` }}
                 ></div>
               </div>
@@ -102,45 +108,3 @@ const ProblemStats = ({ problemData={} }) => {
 };
 
 export default ProblemStats;
-  //   <div className={`${platform.bgColor} rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-all duration-300 hover:scale-105`}>
-  //     <div className="flex items-center justify-between mb-4">
-  //       <div className="flex items-center space-x-3">
-  //         <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${platform.color} flex items-center justify-center text-white text-xl`}>
-  //           {platform.icon}
-  //         </div>
-  //         <div>
-  //           <h3 className="text-lg font-bold text-gray-900">{platform.name}</h3>
-  //           <p className="text-sm text-gray-600">{platform.solved} / {platform.total} solved</p>
-  //         </div>
-  //       </div>
-  //       <div className="text-right">
-  //         <div className="text-2xl font-bold text-gray-900">{platform.solved}</div>
-  //         <div className="text-xs text-gray-500">problems</div>
-  //       </div>
-  //     </div>
-      
-  //     {/* Progress Bar */}
-  //     <div className="mb-4">
-  //       <div className="w-full bg-gray-200 rounded-full h-2">
-  //         <div 
-  //           className={`h-2 rounded-full bg-gradient-to-r ${platform.color} transition-all duration-1000`}
-  //           style={{ width: `${(platform.solved / platform.total) * 100}%` }}
-  //         ></div>
-  //       </div>
-  //       <div className="text-xs text-gray-500 mt-1">
-  //         {((platform.solved / platform.total) * 100).toFixed(1)}% completed
-  //       </div>
-  //     </div>
-
-  //     {/* Difficulty Breakdown */}
-  //     <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-  //       {Object.entries(platform.difficulty).map(([level, count]) => (
-  //         <div key={level} className="text-center">
-  //           <div className={`text-sm font-bold ${platform.textColor}`}>{count}</div>
-  //           <div className="text-xs text-gray-500 capitalize">{level}</div>
-  //         </div>
-  //       ))}
-  //     </div>
-  //   </div>
-  // );
-  // export default ProblemCard;
