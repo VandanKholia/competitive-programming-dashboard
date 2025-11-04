@@ -1,36 +1,58 @@
 import React, { useState } from "react";
-import axios from 'axios';
-import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(""); // for validation message
   const navigate = useNavigate();
+
+  // Password validation function
+  const validatePassword = (password) => {
+    const minLength = /.{8,}/;
+    const hasUpper = /[A-Z]/;
+    const hasLower = /[a-z]/;
+    const hasNumber = /[0-9]/;
+
+    if (!minLength.test(password)) return "Password must be at least 8 characters long.";
+    if (!hasUpper.test(password)) return "Password must include an uppercase letter.";
+    if (!hasLower.test(password)) return "Password must include a lowercase letter.";
+    if (!hasNumber.test(password)) return "Password must include a number.";
+    return ""; // no errors
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
-    setIsLoading(true);
-      setIsLoading(false);
-     
-      axios.post("http://localhost:3000/api/auth/login", { email, password }, { withCredentials: true })
-        .then(result => {
-          const userData = result.data;
-          navigate("/home");
-          alert("Login successful");
-        })
-        .catch(err => {
-          console.error(err);
-          if (err.response && err.response.data && err.response.data.message) {
-            alert(err.response.data.message);
-          } else {
-            alert("An error occurred while logging in.");
-          }
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-     
 
+    // Check password validity
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      setError(passwordError);
+      return;
+    }
+    setError(""); // clear any old errors
+
+    setIsLoading(true);
+    axios
+      .post("http://localhost:3000/api/auth/login", { email, password }, { withCredentials: true })
+      .then((result) => {
+        const userData = result.data;
+        navigate("/home");
+        alert("Login successful");
+      })
+      .catch((err) => {
+        console.error(err);
+        if (err.response && err.response.data && err.response.data.message) {
+          alert(err.response.data.message);
+        } else {
+          alert("An error occurred while logging in.");
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -71,12 +93,16 @@ function Login() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
+                  className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-4 outline-none transition-all duration-200 text-gray-900 placeholder-gray-500 ${
+                    error ? "border-red-500 focus:ring-red-200" : "border-gray-200"
+                  }`}
                   placeholder="Enter your password"
                   required
-                />
+                />  
+                {error && (
+                  <p className="text-red-500 text-sm mt-1 font-medium">{error}</p>
+                )}
               </div>
-
 
               {/* Login Button */}
               <button
@@ -87,9 +113,26 @@ function Login() {
               >
                 {isLoading ? (
                   <>
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <svg
+                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 
+                        3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
                     </svg>
                     Signing in...
                   </>
@@ -114,17 +157,16 @@ function Login() {
               <button
                 type="button"
                 className="text-gray-600 hover:text-blue-600 font-semibold transition-colors duration-200 group"
-                onClick={() => navigate('/signup')}
+                onClick={() => navigate("/signup")}
               >
                 Create an account
-                <span className="inline-block ml-1 transform group-hover:translate-x-1 transition-transform duration-200">→</span>
+                <span className="inline-block ml-1 transform group-hover:translate-x-1 transition-transform duration-200">
+                  →
+                </span>
               </button>
             </div>
           </div>
         </div>
-
-        
-        
       </div>
     </div>
   );

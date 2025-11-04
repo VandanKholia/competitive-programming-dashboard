@@ -8,11 +8,33 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const [error, setError] = useState(""); 
+
+    // Password validation function
+    const validatePassword = (password) => {
+      const minLength = /.{8,}/;
+      const hasUpper = /[A-Z]/;
+      const hasLower = /[a-z]/;
+      const hasNumber = /[0-9]/;
+  
+      if (!minLength.test(password)) return "Password must be at least 8 characters long.";
+      if (!hasUpper.test(password)) return "Password must include an uppercase letter.";
+      if (!hasLower.test(password)) return "Password must include a lowercase letter.";
+      if (!hasNumber.test(password)) return "Password must include a number.";
+      return "";
+    };
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    setIsLoading(true);
 
+
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      setError(passwordError);
+      return;
+    }
+    setError("");
+    setIsLoading(true);
     axios.post("http://localhost:3000/api/auth/signup", { name, email, password }, { withCredentials: true })
       .then(result => {
         navigate("/platforms");
@@ -86,10 +108,15 @@ function SignUp() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
-                  placeholder="Create a password"
+                  className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-4 outline-none transition-all duration-200 text-gray-900 placeholder-gray-500 ${
+                    error ? "border-red-500 focus:ring-red-200" : "border-gray-200"
+                  }`}
+                  placeholder="Enter your password"
                   required
                 />
+                {error && (
+                  <p className="text-red-500 text-sm mt-1 font-medium">{error}</p>
+                )}
               </div>
 
               {/* Sign Up Button */}

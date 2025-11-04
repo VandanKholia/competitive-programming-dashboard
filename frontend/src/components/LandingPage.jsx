@@ -1,47 +1,107 @@
 import React, { useEffect } from 'react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import './LandingPage.css'; // Optional custom styles
-
+import { Code2, Trophy, TrendingUp, BarChart3, Users, Zap, ArrowRight, CheckCircle } from 'lucide-react';
+import logo from '../assets/logo.png';
+import dashImg from '../assets/dashboard_img.png';
 const LandingPage = () => {
-  useEffect(() => {
-    AOS.init({ duration: 1000 });
-  }, []);
-
   return (
-    <div className="bg-dark text-light">
-      {/* Hero Section */}
-      <section className="d-flex flex-column justify-content-center align-items-center text-center vh-100 px-3 hero-bg">
-        <h1 className="display-4 fw-bold animate__animated animate__fadeInDown">Welcome to <span className="text-info">RankUp</span></h1>
-        <p className="lead mt-3 animate__animated animate__fadeInUp">Start your coding journey now!</p>
-        <a href="/signup" className="btn btn-outline-info mt-4">Explore Features</a>
-      </section>
-
-      {/* Features */}
-      <section id="features" className="container py-5">
-        <h2 className="text-center mb-5" data-aos="fade-up">Why Choose RankUp?</h2>
-        <div className="row g-4">
-          {[
-            { title: 'Live Contests', desc: 'Join weekly timed challenges with thousands of coders.' },
-            { title: 'Leaderboard', desc: 'Global rankings to showcase your skill.' },
-            { title: 'Secure Judging', desc: 'Fast & accurate evaluation with instant feedback.' }
-          ].map((feature, index) => (
-            <div className="col-md-4" key={index} data-aos="zoom-in" data-aos-delay={index * 100}>
-              <div className="card bg-secondary h-100 shadow-sm border-0">
-                <div className="card-body text-center">
-                  <h5 className="card-title">{feature.title}</h5>
-                  <p className="card-text">{feature.desc}</p>
-                </div>
-              </div>
+    <div className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-200 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center">
+            <div className="p-1 rounded-lg bg-blue-100 mr-2">
+              <img src={logo} alt="CodeProfile Logo" className="w-10 h-10" />
             </div>
-          ))}
+            <h1
+              className="text-3xl text-black-600 tracking-tight mt-2"
+              style={{ fontFamily: "'Audiowide', sans-serif" }}
+            >
+              CodeProfile
+            </h1>
+          </div>
+          <div className="flex items-center gap-4">
+            <a href="/login" className="text-gray-600 hover:text-blue-600 font-medium transition-colors">
+              Login
+            </a>
+            <a href="/signup" className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all font-medium shadow-sm hover:shadow-md">
+              Get Started
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+<section className="pt-28 sm:pt-32 pb-16 px-4 sm:px-6">
+  <div className="max-w-7xl mx-auto">
+    <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      
+      {/* Text Section */}
+      <div className="text-center lg:text-left mt-10">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-blue-600 leading-tight mb-4 sm:mb-6">
+          Level Up
+          <span className="text-gray-900"> Your Coding Skills</span>
+        </h1>
+        <p className="text-lg sm:text-xl text-gray-600  leading-relaxed max-w-xl mx-auto lg:mx-0">
+          Track your progress across LeetCode, Codeforces, and CodeChef.
+          Visualize your growth and compete with developers worldwide.
+        </p>
+      </div>
+      {/* Image Section */}
+      <div className="flex justify-center lg:justify-end">
+        <img
+          src={dashImg}
+          alt="Dashboard"
+          className="w-full max-w-sm sm:max-w-md lg:max-w-lg object-contain"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      {/* Features Section */}
+      <section id="features" className="py-20 bg-gray-50 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Everything You Need to Excel</h2>
+            <p className="text-xl text-gray-600">Powerful features to track and improve your coding skills</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                icon: BarChart3,
+                title: 'Unified Dashboard',
+                desc: 'View all your stats from LeetCode, Codeforces, and CodeChef in one place.',
+                color: 'blue'
+              },
+              {
+                icon: Trophy,
+                title: 'Contest Analytics',
+                desc: 'Track your contest performance and rating changes over time.',
+                color: 'purple'
+              },
+              {
+                icon: TrendingUp,
+                title: 'Progress Tracking',
+                desc: 'Visualize your growth with beautiful charts and insights.',
+                color: 'green'
+              },
+            ].map((feature, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1"
+              >
+                <div className={`w-14 h-14 bg-${feature.color}-100 rounded-xl flex items-center justify-center mb-5`}>
+                  <feature.icon className={`w-7 h-7 text-${feature.color}-600`} />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{feature.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="text-center py-4 mt-5 border-top border-light">
-        <small>&copy; 2025 RankUP. All rights reserved.</small>
-      </footer>
     </div>
   );
 };

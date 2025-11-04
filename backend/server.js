@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
     credentials: true
 }));
 
@@ -30,20 +30,12 @@ app.use('/api/codeforces',codeforcesRouter)
 app.use('/api/codechef',codechefRouter);
 app.use('/api/auth', platformRouter);
 
-
-// async function fetchCodeforcesData(userName) {
-//  const url = `${process.env.CODEFORCES_URL}${userName}`;
-//     let response = await fetch(url);
-//     let data = await response.json();
-//     return data;
-// }
+// health check for Render / CI
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok' });
+});
 
 
-// app.get('/api/codeforces/:username', async(req, res) => {
-//     const userName = req.params.username;
-//     let data = await fetchCodeforcesData(userName);
-//     res.json(data);
-// })
 
 const port = process.env.PORT || 3000;
 

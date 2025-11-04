@@ -29,10 +29,11 @@ function AppContent() {
   }, []);
 
   useEffect(() => {
-    if (user && !loading) {
+    if (user != null && !loading) {
+      console.log("User is logged in", user);
       navigate("/home");
     }
-  }, [user, loading, navigate]);
+  }, [user]);
 
   if (loading) {
     return <div>Loading...</div>;

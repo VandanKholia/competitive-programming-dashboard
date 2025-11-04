@@ -9,7 +9,7 @@ const router = express.Router()
 router.post('/signup',signup);
 router.post('/login',login);
 router.post('/refresh-token', refreshAccessToken);
-router.post('/logout', authenticateJWT, logout);
+router.post('/logout',authenticateJWT, logout);
 
 router.get('/user', authenticateJWT, async (req,res) => {
      try {

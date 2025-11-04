@@ -48,33 +48,28 @@ export default async function getLeetCodeFullStats(username) {
       variables: { username }
     });
     
-    const { matchedUser, userContestRanking } = response.data.data;
-
+    const { matchedUser, userContestRanking } = response.data.data; 
     if(!matchedUser) {
       return null;
     }
 
-    const history = response.data.data.userContestRankingHistory;
-      history.forEach(entry => {
-      if (entry.attended) {
-        // console.log(
-        //   `${entry.contest.title} (${new Date(entry.contest.startTime * 1000).toLocaleDateString()}) → Rating: ${entry.rating}`
-        // );
-      }
-    });
-    const ratingsHistory = history.filter(entry => entry.attended).map(entry=>({
-      date: new Date(entry.contest.startTime * 1000),
-      rating: entry.rating
-    }))
+    const history = response.data.data.userContestRankingHistory || [];
 
-    const totalSolved = matchedUser.submitStats.acSubmissionNum[0].count;
-    const easySolved = matchedUser.submitStats.acSubmissionNum[1].count;
-    const mediumSolved = matchedUser.submitStats.acSubmissionNum[2].count;
-    const hardSolved = matchedUser.submitStats.acSubmissionNum[3].count;
+    const ratingsHistory = (history || []).filter(entry => entry && entry.attended).map(entry => ({
+      date: entry?.contest?.startTime ? new Date(entry.contest.startTime * 1000) : null,
+      rating: entry.rating ?? null
+    })).filter(e => e.date !== null);
+
+
+    const submissions = matchedUser?.submitStats?.acSubmissionNum || [];
+    const totalSolved = submissions[0]?.count ?? 0;
+    const easySolved = submissions[1]?.count ?? 0;
+    const mediumSolved = submissions[2]?.count ?? 0;
+    const hardSolved = submissions[3]?.count ?? 0;
 
     const rating = userContestRanking ? parseInt(userContestRanking.rating) : null;
     const globalRanking = userContestRanking ? userContestRanking.globalRanking : null;
-    const badgeName = userContestRanking? userContestRanking.badge.name : null;
+    const badgeName = userContestRanking?.badge?.name ?? null;
 
 
     const leetcodeData = {
@@ -89,6 +84,7 @@ export default async function getLeetCodeFullStats(username) {
         badgeName,
         ratingsHistory
     }
+
     return {
       "ratingHistory":ratingsHistory,
         "username": username,
@@ -102,6 +98,6 @@ export default async function getLeetCodeFullStats(username) {
         
     };
   } catch (error) {
-    console.error("Error fetching data:", error.message);
+    console.error("Scraper Error fetching data:", error.message);
   }
 }
