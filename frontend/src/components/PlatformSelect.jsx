@@ -39,7 +39,7 @@ function PlatformSelect() {
       return false;
 
     } catch (error) {
-      console.log("Error validating user:", error);
+      console.error("Error validating user:", error);
       return false;
     }
     
@@ -93,7 +93,7 @@ function PlatformSelect() {
       alert("Platforms saved");
       navigate("/home");
     }).catch(err => {
-      console.log("Error: ", err);
+      console.error("Error: ", err);
     }).finally(() => {
       setIsLoading(false);
     });

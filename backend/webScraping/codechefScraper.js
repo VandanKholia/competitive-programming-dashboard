@@ -48,7 +48,7 @@ const getCodechefStats = async (handle) => {
             return { success: false, status: resdata.status };
         }
     } catch (e) {
-        console.log("error fetching codechef data",e);
+        console.error("error fetching codechef data", e);
         return;
     }
 };

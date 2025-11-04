@@ -30,7 +30,7 @@ const PlatformCodingDashboard = () => {
 
         await getData(res.data.platforms);
       } catch (err) {
-        console.log("error fetching user data:", err);
+        console.error("error fetching user data:", err);
         setUser(null);
 
       } finally {

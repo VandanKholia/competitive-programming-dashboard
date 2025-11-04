@@ -1,4 +1,5 @@
 import getCodechefStats from "../webScraping/codechefScraper.js";
+import { error as logError } from '../utils/logger.js';
 
 export default async function codechefController(username) {
     try {
@@ -6,6 +7,6 @@ export default async function codechefController(username) {
       return data;
     } 
     catch(err) {
-      console.log("error fetching codechef data: ",err);
+      logError("error fetching codechef data: ", err);
     }
 }

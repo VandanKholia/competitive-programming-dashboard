@@ -8,6 +8,7 @@ import Home from "./components/Home";
 import LandingPage from "./components/LandingPage";
 import { useState } from "react";
 import { useEffect } from "react";
+import { log } from './utils/logger';
 import axios from "axios";
 
 
@@ -30,7 +31,6 @@ function AppContent() {
 
   useEffect(() => {
     if (user != null && !loading) {
-      console.log("User is logged in", user);
       navigate("/home");
     }
   }, [user]);

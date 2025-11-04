@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose'
 import dotenv from 'dotenv';
+import { log } from './utils/logger.js';
 import authRoutes from './routes/auth.js';
 import codechefRouter from './routes/codechefRouter.js'
 import codeforcesRouter from './routes/codeforcesRouter.js'
@@ -21,8 +22,8 @@ app.use(cors({
 
 
 mongoose.connect(process.env.MONGO_URI)
-    .then(()=> console.log("Connected to mongoDB"))
-    .catch(err=>console.log("Failed to connect to mongoDB ",err))
+    .then(()=> log("Connected to mongoDB"))
+    .catch(err=> console.error("Failed to connect to mongoDB ", err))
 
 app.use('/api/auth',authRoutes);
 app.use('/api/leetcode',leetcodeRouter)
@@ -40,5 +41,5 @@ app.get('/health', (req, res) => {
 const port = process.env.PORT || 3000;
 
 app.listen(port, ()=>{
-    console.log(`server running on port ${port}`)
+    log(`server running on port ${port}`)
 })
