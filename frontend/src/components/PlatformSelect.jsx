@@ -12,7 +12,7 @@ function PlatformSelect() {
 
   useEffect(() => {
     // Fetch existing platform data if any
-    axios.get("http://localhost:3000/api/auth/platforms", { withCredentials: true })
+    axios.get("http://localhost:3000/api/platforms", { withCredentials: true })
     .then(result=> {
       setCodeforces(result.data.platforms.find(p => p.name === "codeforces")?.userName || "");
       setCodechef(result.data.platforms.find(p => p.name === "codechef")?.userName || "");
@@ -86,7 +86,7 @@ function PlatformSelect() {
       setIsLoading(false);
       return;
     }
-    await axios.post("http://localhost:3000/api/auth/platforms",
+    await axios.post("http://localhost:3000/api/platforms",
       { platforms: selectedPlatforms },
       { withCredentials: true }
     ).then(result => {

@@ -9,7 +9,7 @@ export default async function codeforcesController(userName) {
     const userInfoData = await userInfoRes.json();
 
     if (userInfoData.status !== "OK") {
-      throw new Error("Failed to fetch Codeforces user info");
+      return null;
     }
     const user = userInfoData.result[0];
 
@@ -56,7 +56,6 @@ export default async function codeforcesController(userName) {
     
   } catch (error) {
     console.error("Error fetching Codeforces data:", error.message);
-    throw error;
   }
 }
 

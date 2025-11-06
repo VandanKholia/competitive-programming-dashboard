@@ -15,6 +15,9 @@ export const fetchCodeforcesData = async (username) => {
       ratingHistory: res.data.ratingHistory
     };
   } catch (err) {
+    if(err.response?.status === 429) {
+      alert("Too many requests. Please try again later.");
+    }  
     console.error("Codeforces error:", err);
     return null;
   }
@@ -23,6 +26,7 @@ export const fetchCodeforcesData = async (username) => {
 export const fetchCodechefData = async (username) => {
   try {
     const res = await axios.get(`http://localhost:3000/api/codechef/${username}`);
+
     return {
       name: res.data.name,
       rating: res.data.currentRating,
@@ -34,6 +38,9 @@ export const fetchCodechefData = async (username) => {
     };
       
   } catch (err) {
+    if(err.response?.status === 429) {
+      alert("Too many requests. Please try again later.");
+    } 
     console.error("CodeChef error:", err);
     return null;
   }
@@ -52,6 +59,9 @@ export const fetchLeetCodeData = async (username) => {
     };
 
   } catch (err) {
+    if(err.response?.status === 429) {
+      alert("Too many requests. Please try again later.");
+    } 
     console.error("LeetCode error:", err);
     return null;
   }

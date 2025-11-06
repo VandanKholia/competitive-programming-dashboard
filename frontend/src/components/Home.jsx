@@ -47,7 +47,6 @@ const PlatformCodingDashboard = () => {
       for (const platform of platforms) {
         if (platform.name === "codeforces") {
           const data = await fetchCodeforcesData(platform.userName);
-
           if (data) {
             newPlatformsData.codeforces = data;
           }
