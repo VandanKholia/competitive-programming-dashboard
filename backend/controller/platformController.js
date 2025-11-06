@@ -35,21 +35,3 @@ export const getPlatforms = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
-// export const platforms = async (req,res) => {
-//      try {
-//         const { email, platforms } = req.body;
-//         const user = await User.findOne({ email });
-
-//         if (!user) {
-//             return res.status(404).json({ message: "User not found" });
-//         }
-//         user.platforms = platforms;
-//         await user.save();
-//         res.status(200).json({ message: "Platforms saved successfully" });
-//     } catch (err) {
-//         console.error("Platform save error:", err);
-//         res.status(500).json({ message: "Server error" });
-
-//     }
-// }

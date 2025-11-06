@@ -30,17 +30,10 @@ const apiLimiter = rateLimit({
   standardHeaders: true, 
   legacyHeaders: false,
 });
-// app.use('/api', apiLimiter);
 
 mongoose.connect(process.env.MONGO_URI)
     .then(()=> log("Connected to mongoDB"))
     .catch(err=> console.error("Failed to connect to mongoDB ", err))
-
-// app.use('/api/auth',authRoutes);
-// app.use('/api/leetcode',leetcodeRouter)
-// app.use('/api/codeforces',codeforcesRouter)
-// app.use('/api/codechef',codechefRouter);
-// app.use('/api', platformRouter);
 
 app.use('/api/auth',authRoutes);
 app.use('/api/leetcode',apiLimiter, leetcodeRouter)
