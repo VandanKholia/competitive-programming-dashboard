@@ -9,7 +9,7 @@ import LandingPage from "./components/LandingPage";
 import { useState } from "react";
 import { useEffect } from "react";
 import { log } from './utils/logger';
-import axios from "axios";
+import api from './utils/api';
 
 
 function AppContent() {
@@ -18,7 +18,7 @@ function AppContent() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/auth/user", { withCredentials: true })
+  api.get('/api/auth/user')
       .then(response => {
         setUser(response.data);
         setLoading(false);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from '../utils/api';
 import { useNavigate } from "react-router-dom";
 import { SiLeetcode, SiCodechef, SiCodeforces } from "react-icons/si";
 
@@ -12,7 +12,7 @@ function PlatformSelect() {
 
   useEffect(() => {
     // Fetch existing platform data if any
-    axios.get("http://localhost:3000/api/platforms", { withCredentials: true })
+  api.get('/api/platforms')
     .then(result=> {
       setCodeforces(result.data.platforms.find(p => p.name === "codeforces")?.userName || "");
       setCodechef(result.data.platforms.find(p => p.name === "codechef")?.userName || "");
@@ -24,15 +24,15 @@ function PlatformSelect() {
   const checkValidUser = async(platform, username) => { 
     try {
       if(platform === "codeforces") {
-        const res = await axios.get(`http://localhost:3000/api/codeforces/${username}`);
+  const res = await api.get(`/api/codeforces/${username}`);
         return res.status === 200 || res.status === 201;
       }
       if(platform === "codechef") {
-        const res = await axios.get(`http://localhost:3000/api/codechef/${username}`);
+  const res = await api.get(`/api/codechef/${username}`);
         return res.status === 200 || res.status === 201;
       }
       if(platform === "leetcode") {
-        const res = await axios.get(`http://localhost:3000/api/leetcode/${username}`);
+  const res = await api.get(`/api/leetcode/${username}`);
         return res.status === 200 || res.status === 201;
       }
 
@@ -86,7 +86,7 @@ function PlatformSelect() {
       setIsLoading(false);
       return;
     }
-    await axios.post("http://localhost:3000/api/platforms",
+  await api.post('/api/platforms',
       { platforms: selectedPlatforms },
       { withCredentials: true }
     ).then(result => {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from 'axios';
+import api from '../utils/api';
 import { useNavigate } from "react-router-dom";
 
 function SignUp() {
@@ -35,7 +35,7 @@ function SignUp() {
     }
     setError("");
     setIsLoading(true);
-    axios.post("http://localhost:3000/api/auth/signup", { name, email, password }, { withCredentials: true })
+  api.post('/api/auth/signup', { name, email, password })
       .then(result => {
         navigate("/platforms");
         alert("Account created successfully!");

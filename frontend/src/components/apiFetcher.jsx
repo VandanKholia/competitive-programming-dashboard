@@ -1,8 +1,8 @@
-import axios from "axios";
+import api from '../utils/api';
 
 export const fetchCodeforcesData = async (username) => {
   try {
-    const res = await axios.get(`http://localhost:3000/api/codeforces/${username}`);
+  const res = await api.get(`/api/codeforces/${username}`);
     return {
       handle: res.data.handle,
       firstName: res.data.firstName,
@@ -25,7 +25,7 @@ export const fetchCodeforcesData = async (username) => {
 
 export const fetchCodechefData = async (username) => {
   try {
-    const res = await axios.get(`http://localhost:3000/api/codechef/${username}`);
+  const res = await api.get(`/api/codechef/${username}`);
 
     return {
       name: res.data.name,
@@ -48,7 +48,7 @@ export const fetchCodechefData = async (username) => {
 
 export const fetchLeetCodeData = async (username) => {
   try {
-    const res = await axios.get(`http://localhost:3000/api/leetcode/${username}`);
+  const res = await api.get(`/api/leetcode/${username}`);
     return {
       rating: res.data.rating,
       // globalRanking: res.data.globalRanking,

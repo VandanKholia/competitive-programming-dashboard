@@ -34,8 +34,8 @@ export const login = async (req, res) => {
         const isProd = process.env.NODE_ENV === 'production';
         const cookieOptions = {
             httpOnly: true,
-            secure: isProd,
-            sameSite: isProd ? 'none' : 'lax'
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         }
 
         return res.status(200)
@@ -68,7 +68,8 @@ export const signup = async (req, res) => {
         const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(newUser._id)
         const options = {
             httpOnly: true,
-            secure: true
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         }
         return res.status(200).cookie("accessToken", accessToken, options)
         .cookie("refreshToken", refreshToken, options)
@@ -97,7 +98,8 @@ export const logout = async (req, res) => {
 
     const options = {
         httpOnly: true,
-        secure: true
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     }
     res.clearCookie("accessToken", options);
     res.clearCookie("refreshToken", options);
@@ -119,7 +121,8 @@ export const refreshAccessToken = async (req, res) => {
         const accessToken = user.generateAccessToken();
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
-            sameSite: 'lax',
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
             maxAge: 15 * 60 * 1000
         });
         res.json({ accessToken });

@@ -1,5 +1,5 @@
 
-import axios from 'axios';
+import api from '../utils/api';
 import React, { useState } from 'react';
 import { Code2,ChartColumnIncreasing } from 'lucide-react';
 import { useEffect } from 'react';
@@ -24,7 +24,7 @@ const PlatformCodingDashboard = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/auth/user", { withCredentials: true });
+  const res = await api.get('/api/auth/user');
         setUser(res.data);
         setPlatforms(res.data.platforms || []);
 
@@ -71,7 +71,7 @@ const PlatformCodingDashboard = () => {
   const handleLogout = async () => {
     try {
       setLoading(true);
-      await axios.post("http://localhost:3000/api/auth/logout", {}, { withCredentials: true });
+  await api.post('/api/auth/logout', {});
       navigate('/');
       setLoading(false)
     } catch (err) {

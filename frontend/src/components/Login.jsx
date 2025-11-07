@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from '../utils/api';
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -35,8 +35,8 @@ function Login() {
     setError(""); // clear any old errors
 
     setIsLoading(true);
-    axios
-      .post("http://localhost:3000/api/auth/login", { email, password }, { withCredentials: true })
+    api
+      .post('/api/auth/login', { email, password })
       .then((result) => {
         const userData = result.data;
         navigate("/home");
