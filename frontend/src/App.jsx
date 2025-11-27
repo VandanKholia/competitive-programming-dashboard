@@ -18,13 +18,15 @@ function AppContent() {
   const navigate = useNavigate();
 
   useEffect(() => {
-  api.get('/api/auth/user')
+    api.get('/api/auth/user')
       .then(response => {
         setUser(response.data);
         setLoading(false);
       })
       .catch(error => {
-        console.error("Error fetching user data:", error);
+        if (error.response?.status === 401 || error.response?.status === 404) {
+          navigate("/");
+        }
         setLoading(false);
       });
   }, []);
@@ -36,8 +38,13 @@ function AppContent() {
   }, [user]);
 
   if (loading) {
-    return <div>Loading...</div>;
-  }
+  return (
+    <div className="flex justify-center items-center h-screen w-full">
+      <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent"></div>
+    </div>
+  );
+}
+
 
   return (
     <Routes>
