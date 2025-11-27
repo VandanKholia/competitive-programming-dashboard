@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import api from '../utils/api';
 import { useNavigate } from "react-router-dom";
+import checkCookie from '../utils/checkCookie';
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -25,7 +26,11 @@ function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-
+    // Check if cookies are enabled
+    if (!checkCookie()) {
+      alert("Cookies are disabled in your browser. Please enable cookies to log in.");
+      return;
+    }
     // Check password validity
     const passwordError = validatePassword(password);
     if (passwordError) {
