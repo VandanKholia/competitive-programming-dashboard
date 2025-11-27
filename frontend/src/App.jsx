@@ -24,9 +24,7 @@ function AppContent() {
         setLoading(false);
       })
       .catch(error => {
-        if (error.response?.status === 401 || error.response?.status === 404) {
-          navigate("/");
-        }
+        setUser(null);
         setLoading(false);
       });
   }, []);
