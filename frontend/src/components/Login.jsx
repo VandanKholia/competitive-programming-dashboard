@@ -28,6 +28,7 @@ function Login() {
     e.preventDefault();
     // Check if cookies are enabled
     if (!checkCookie()) {
+      console.log(checkCookie());
       alert("Cookies are disabled in your browser. Please enable cookies to log in.");
       return;
     }
