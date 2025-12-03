@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import api from '../utils/api';
 import { useNavigate } from "react-router-dom";
-import checkCookie from '../utils/checkCookie';
-
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
