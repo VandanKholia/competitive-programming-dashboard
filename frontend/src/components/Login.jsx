@@ -39,7 +39,6 @@ function Login() {
       .post('/api/auth/login', { email, password })
       .then((result) => {
         // After successful login, verify that httpOnly cookies are being set
-        // by calling a protected endpoint
         api.get('/api/auth/user')
           .then(() => {
             // Cookies are working
@@ -54,7 +53,6 @@ function Login() {
                 "Login credentials are valid, but third-party cookies appear to be disabled in your browser.\n\n" +
                 "Please enable third-party cookies in your browser settings to use this app."
               );
-              // Clear password but stay on login page
               setPassword("");
             } else {
               console.error('Verification error:', verifyErr);
