@@ -61,12 +61,6 @@ Short quickstart
 Deploy notes
 - On Render: create two services (backend as Web Service, frontend as Static Site). Set environment variables on Render (MONGO_URI, ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET, CLIENT_URL, VITE_API_URL).
 
-Screenshots
-- Add screenshots to `frontend/public/screenshots/` (create the folder if needed). Example markdown to include images below:
-
-![Home](/frontend/public/screenshots/home.png)
-![Platforms](/frontend/public/screenshots/platforms.png)
-
 API overview (examples)
 - POST /api/auth/signup — { name, email, password }
 - POST /api/auth/login — { email, password }
