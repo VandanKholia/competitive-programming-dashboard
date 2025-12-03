@@ -26,12 +26,6 @@ function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Check if cookies are enabled
-    if (!checkCookie()) {
-      console.log(checkCookie());
-      alert("Cookies are disabled in your browser. Please enable cookies to log in.");
-      return;
-    }
     // Check password validity
     const passwordError = validatePassword(password);
     if (passwordError) {
@@ -44,9 +38,31 @@ function Login() {
     api
       .post('/api/auth/login', { email, password })
       .then((result) => {
-        const userData = result.data;
-        navigate("/home");
-        alert("Login successful");
+        // After successful login, verify that httpOnly cookies are being set
+        // by calling a protected endpoint
+        api.get('/api/auth/user')
+          .then(() => {
+            // Cookies are working
+            navigate("/home");
+            alert("Login successful");
+            setIsLoading(false);
+          })
+          .catch((verifyErr) => {
+            // If verification fails with 401, cookies are blocked
+            if (verifyErr.response && verifyErr.response.status === 401) {
+              alert(
+                "Login credentials are valid, but third-party cookies appear to be disabled in your browser.\n\n" +
+                "Please enable third-party cookies in your browser settings to use this app."
+              );
+              // Clear password but stay on login page
+              setPassword("");
+            } else {
+              console.error('Verification error:', verifyErr);
+              alert("Login succeeded but session verification failed. Please try again.");
+              navigate("/home");
+            }
+            setIsLoading(false);
+          });
       })
       .catch((err) => {
         console.error(err);
@@ -55,8 +71,6 @@ function Login() {
         } else {
           alert("An error occurred while logging in.");
         }
-      })
-      .finally(() => {
         setIsLoading(false);
       });
   };
