@@ -18,35 +18,23 @@ It helps programmers track their **problem-solving progress, contest participati
 - 🏆 **Contest Analytics**
   - Current rating, rank, and contest count per platform
   - Unified view of competitive performance
-
-- 📈 **Rating Progress Tracking**
-  - Visual line chart showing rating changes over time
-  - Compare growth across multiple platforms
-
-- 🥧 **Contest Participation Insights**
-  - Pie chart showing participation distribution
-  - Easy comparison between platforms
-
-- ⚡ **Modern UI & UX**
-  - Clean dashboard layout
-  - Responsive design
-  - Smooth data visualization
-
 ---
 
 ## 📸 Screenshots
 <p align="center">
+  <img src="screenshots/landing.png" width="750"/>  
+</p>
+<p align="center">
+  <img src="screenshots/platform.png" width="650" height="650"/>
+</p>
+<p align="center">
   <img src="screenshots/dashboard_1.png" width="750"/>
+  
 </p>
 <p align="center">
   <img src="screenshots/dashboard_2.png" width="600"/>
 </p>
-<p align="center">
-  <img src="screenshots/landing.png" width="750"/>
-</p>
-<p align="center">
-  <img src="screenshots/platform.png" width="750"/>
-</p>
+
 
 
 ---
