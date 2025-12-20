@@ -1,8 +1,75 @@
-# CodeProfile - Competitive Programming Dashboard
+# 🚀 CodeProfile – Competitive Programming Dashboard
 
-A full-stack dashboard to track competitive programming profiles (Codeforces, CodeChef, LeetCode). This repository contains a Node.js/Express backend that scrapes or queries platform data and a React + Vite frontend.
+CodeProfile is a **full-stack competitive programming dashboard** that aggregates and visualizes user data from **LeetCode, Codeforces, and CodeChef** in one place.  
+It helps programmers track their **problem-solving progress, contest participation, ratings, and growth over time** through a clean and intuitive UI.
 
 ---
+
+## ✨ Key Features
+
+- 🔗 **Multi-Platform Integration**
+  - Connect LeetCode, Codeforces, and CodeChef profiles using usernames
+  - Optional platform linking — connect only what you use
+
+- 📊 **Problem Solving Statistics**
+  - Total problems solved across platforms
+  - Platform-wise distribution with progress indicators
+
+- 🏆 **Contest Analytics**
+  - Current rating, rank, and contest count per platform
+  - Unified view of competitive performance
+
+- 📈 **Rating Progress Tracking**
+  - Visual line chart showing rating changes over time
+  - Compare growth across multiple platforms
+
+- 🥧 **Contest Participation Insights**
+  - Pie chart showing participation distribution
+  - Easy comparison between platforms
+
+- ⚡ **Modern UI & UX**
+  - Clean dashboard layout
+  - Responsive design
+  - Smooth data visualization
+
+---
+
+## 📸 Screenshots
+<p align="center">
+  <img src="screenshots/dashboard_1.png" width="900"/>
+</p>
+<p align="center">
+  <img src="screenshots/dashboard_2.png" width="700"/>
+</p>
+<p align="center">
+  <img src="screenshots/landing.png" width="900"/>
+</p>
+<p align="center">
+  <img src="screenshots/platform.png" width="900"/>
+</p>
+
+
+---
+
+## 🏗️ Tech Stack
+
+### Frontend
+- React (Vite)
+- JavaScript
+- Chart.js / Recharts (for data visualization)
+- Modern CSS (cards, gradients, responsive layout)
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB + Mongoose
+- Web scraping & API-based data fetching
+
+---
+
+## 📁 Repository Structure
+
+
 
 ## Repository structure
 
@@ -44,26 +111,3 @@ MONGO_URI=<your-mongodb-connection-string>
 ACCESS_TOKEN_SECRET=<random-secret-for-access-token>
 REFRESH_TOKEN_SECRET=<random-secret-for-refresh-token>
 ```
-# CodeProfile — Competitive Programming Dashboard
-
-Lightweight full-stack app to track coding profiles (Codeforces, CodeChef, LeetCode).
-
-Short quickstart
-- Backend: install and run in /backend
-  - npm install
-  - create `.env` (see backend/.env.example)
-  - npm run dev (or npm start in production)
-- Frontend: install and run in /frontend
-  - npm install
-  - set VITE_API_URL to your backend URL (defaults to http://localhost:3000)
-  - npm run dev (or npm run build && serve the `dist` folder)
-
-Deploy notes
-- On Render: create two services (backend as Web Service, frontend as Static Site). Set environment variables on Render (MONGO_URI, ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET, CLIENT_URL, VITE_API_URL).
-
-API overview (examples)
-- POST /api/auth/signup — { name, email, password }
-- POST /api/auth/login — { email, password }
-- GET /api/auth/user — returns authenticated user
-- GET /api/codeforces/:username, /api/codechef/:username, /api/leetcode/:username
-

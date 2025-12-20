@@ -7,7 +7,7 @@ const LandingPage = () => {
     <div className="min-h-screen bg-white">
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-200 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="w-full px-6 py-4 flex items-center justify-between">
           <div className="flex items-center">
             <div className="p-1 rounded-lg bg-blue-100 mr-2">
               <img src={logo} alt="CodeProfile Logo" className="w-10 h-10" />
