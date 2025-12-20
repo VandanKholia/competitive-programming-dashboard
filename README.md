@@ -36,16 +36,16 @@ It helps programmers track their **problem-solving progress, contest participati
 
 ## 📸 Screenshots
 <p align="center">
-  <img src="screenshots/dashboard_1.png" width="900"/>
+  <img src="screenshots/dashboard_1.png" width="750"/>
 </p>
 <p align="center">
-  <img src="screenshots/dashboard_2.png" width="700"/>
+  <img src="screenshots/dashboard_2.png" width="600"/>
 </p>
 <p align="center">
-  <img src="screenshots/landing.png" width="900"/>
+  <img src="screenshots/landing.png" width="750"/>
 </p>
 <p align="center">
-  <img src="screenshots/platform.png" width="900"/>
+  <img src="screenshots/platform.png" width="750"/>
 </p>
 
 
